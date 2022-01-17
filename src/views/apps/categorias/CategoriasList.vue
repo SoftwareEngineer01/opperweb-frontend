@@ -208,13 +208,7 @@ export default {
       columns: [
         { key: 'id', label: 'Código', sortable: true },
         { key: 'nombre', label: 'Nombre Categoría', sortable: true },
-        // { key: 'line', label: 'Linea', sortable: true },
-        // { key: 'cost', label: 'Costo', sortable: true },
-        // { key: 'stock', label: 'Cantidad', sortable: true },
-        // { key: 'min_stock', label: 'Cantidad Mínima', sortable: true },
-        // { key: 'location', label: 'Ubicación', sortable: true },
         { key: 'created_at', label: 'Fecha', sortable: true, formatter: (value) => moment(value).format('LLL') },
-        // { key: 'status', label: 'Estado', sortable: true },
         { key: 'actions', label: 'Opciones', sortable: true },
       ],
       perPage: 10,
