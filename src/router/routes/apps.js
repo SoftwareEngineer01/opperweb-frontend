@@ -5,6 +5,15 @@ export default [
     component: () => import('@/views/apps/calendar/Calendar.vue'),
   },
 
+
+  // CATEGORÍAS
+  {
+    path: '/apps/categorias',
+    name: 'apps-categorias',
+    component: () => import('@/views/apps/categorias/CategoriasList.vue'),
+  },
+
+
   // *===============================================---*
   // *--------- EMAIL & IT'S FILTERS N LABELS -------------------------------*
   // *===============================================---*
