@@ -23,6 +23,9 @@
                 label-for="categoria"
                 class="col-md-12"
               >
+              <validation-provider 
+                #default="{ errors }"
+                rules="required">
                 <v-select
                   v-model="post.categoria_id"
                   label="nombre"
@@ -33,6 +36,10 @@
                   input-id="nombre"
                   placeholder="Seleccione la categoría"
                 />
+                  <b-form-invalid-feedback :state="errors.length > 0 ? false:null">
+                      {{ errors[0] }}
+                  </b-form-invalid-feedback>
+                </validation-provider>
               </b-form-group>
 
               <!-- Título -->
@@ -122,6 +129,7 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 
 // Servicios
 import * as categoriaServicio from '@/services/categorias'
+import * as postServicio from '@/services/post'
 
 export default {
 
@@ -142,7 +150,7 @@ export default {
     return {
       categorias : [],
       post: {
-        categoria_id: '',
+        categoria_id: null,
         titulo: '', 
         contenido: '',       
       },
@@ -165,17 +173,17 @@ export default {
     },
 
     async addPost() {
-      // try {
-      //   const response = await categoriaServicio.agregarCategoria(this.categoria)
+      try {
+        const response = await postServicio.agregarPosts(this.post)
 
-      //   if (response.status === 200) {
-      //     this.$emit('reload')
-      //     this.hidePostModal()
-      //     this.showToast('Agregado', 'CheckIcon', 'Categoría Agregada', 'success')
-      //   }
-      // } catch (error) {         
-      //   this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al agregar la categoría', 'warning')         
-      // }
+        if (response.status === 200) {
+          this.$emit('reload')
+          this.hidePostModal()
+          this.showToast('Agregado', 'CheckIcon', 'Post Agregado', 'success')
+        }
+      } catch (error) {         
+        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al agregar el post', 'warning')         
+      }
     },
 
     hidePostModal() {
@@ -185,9 +193,11 @@ export default {
     },
 
     cleanForm() {
-      // this.categoria = {
-      //   nombre: '',
-      // }
+      this.post = {
+        categoria_id: null,
+        titulo: '', 
+        contenido: '',       
+      }
     },
 
     showToast(title, icon, text, variant) {

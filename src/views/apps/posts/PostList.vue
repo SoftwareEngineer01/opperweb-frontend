@@ -42,8 +42,8 @@
                 placeholder="Buscar..."
               />
               <b-button
-                variant="primary"
-                @click="addPost"            
+                v-b-modal.modal-post
+                variant="primary"             
               >
                 <span class="text-nowrap">Agregar</span>
               </b-button>
@@ -290,10 +290,6 @@ export default {
       } catch (error) {
         this.showToast('Warning', 'AlertCircleIcon', 'No se pudieron obtener los datos', 'warning')
       }
-    },
-
-    addPost() {
-      this.$router.push({ name: 'posts-add' })
     },
 
     editCategory(item) {
