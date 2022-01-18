@@ -70,6 +70,14 @@
         :per-page="perPage"
       >
 
+       <!-- Column: Comentarios -->
+        <template #cell(comentarios)="data">          
+              <small v-if="data.item.comentarios.length < 1">No tiene Comentarios</small>
+              <div v-for="comentario in data.item.comentarios" :key="comentario.id">
+                  <b>{{ comentario.id }}</b> - <small>{{ comentario.contenido }}</small>
+              </div>
+        </template>  
+
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <b-dropdown
@@ -87,7 +95,7 @@
             </template>
             <!-- eslint-disable-next-line -->
 
-            <!-- Editar Categoría -->
+            <!-- Editar Post -->
             <b-dropdown-item 
               v-b-modal.editCategoryModal
               @click="editCategory(data.item)"
@@ -96,7 +104,7 @@
               <span class="align-middle ml-50">Editar</span>
             </b-dropdown-item>
 
-            <!-- Eliminar Categoría -->
+            <!-- Eliminar Post -->
             <b-dropdown-item               
               @click="eliminarCategoria(data.item.id)"
             >
@@ -157,17 +165,17 @@
     </b-card>
 
     <!-- Modal para agregar categoría -->
-    <CategoriaAdd
+    <!-- <CategoriaAdd
       ref="refCategoriaAdd"
       @reload="obtenerCategorias"
-    />
+    /> -->
 
     <!-- Modal para editar categoría -->
-    <CategoriaEdit
+    <!-- <CategoriaEdit
       ref="refCategoriaEdit"      
       :categoriaEdit="this.categoria"
        @reload="obtenerCategorias"
-    />
+    /> -->
 
 
   </div>
@@ -194,7 +202,7 @@ import moment from 'moment'
 import 'moment/locale/es'
 
 // Servicios
-import * as servicioCategoria from '@/services/categorias'
+import * as servicioPost from '@/services/post'
 
 // Componentes
 import CategoriaAdd from '@/views/apps/categorias/CategoriaAdd.vue'
@@ -233,7 +241,10 @@ export default {
       empty: 'No hay datos para mostrar',
       columns: [
         { key: 'id', label: 'Código', sortable: true },
-        { key: 'nombre', label: 'Nombre Categoría', sortable: true },
+        { key: 'categoria', label: 'Categoría', sortable: true },
+        { key: 'titulo', label: 'Título', sortable: true },
+        { key: 'contenido', label: 'Contenido', sortable: true },
+        { key: 'comentarios', label: 'Comentarios', sortable: true },
         { key: 'created_at', label: 'Fecha', sortable: true, formatter: (value) => moment(value).format('LLL') },
         { key: 'actions', label: 'Opciones', sortable: true },
       ],
@@ -260,19 +271,19 @@ export default {
   },
 
   watch: {
-    currentPage: { handler: 'obtenerCategorias', deep: true },
+    currentPage: { handler: 'obtenerPosts', deep: true },
   },
 
 
   created() {
-    this.obtenerCategorias()
+    this.obtenerPosts()
   },
 
   methods: {
 
-    async obtenerCategorias() {
+    async obtenerPosts() {
       try {
-        const response = await servicioCategoria.obtenerCategorias()
+        const response = await servicioPost.obtenerPosts()
         if (response.status === 200) {
           this.items = response.data.data
         }
