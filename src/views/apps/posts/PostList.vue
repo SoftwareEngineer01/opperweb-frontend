@@ -293,7 +293,6 @@ export default {
     },
 
     editPost(item) {
-      console.log(item);
       this.post = item
     },
 
