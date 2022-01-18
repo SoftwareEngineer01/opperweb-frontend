@@ -11,3 +11,7 @@ export function agregarCategoria(categoria) {
 export function actualizarCategoria(categoria) {
   return http().put(`/categoria/${categoria.id}`, categoria)
 }
+
+export function eliminarCategoria(id) {
+  return http().delete(`/categoria/${id}`)
+}

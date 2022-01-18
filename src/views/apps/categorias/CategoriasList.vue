@@ -86,6 +86,8 @@
               />
             </template>
             <!-- eslint-disable-next-line -->
+
+            <!-- Editar Categoría -->
             <b-dropdown-item 
               v-b-modal.editCategoryModal
               @click="editCategory(data.item)"
@@ -93,6 +95,15 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Editar</span>
             </b-dropdown-item>
+
+            <!-- Eliminar Categoría -->
+            <b-dropdown-item               
+              @click="eliminarCategoria(data.item.id)"
+            >
+              <feather-icon icon="Trash2Icon" />
+              <span class="align-middle ml-50">Eliminar</span>
+            </b-dropdown-item>
+
           </b-dropdown>
         </template>
 
@@ -272,6 +283,30 @@ export default {
 
     editCategory(item) {
       this.categoria = item
+    },
+
+    async eliminarCategoria(id) {
+      try {
+
+        const modal = await this.$bvModal.msgBoxConfirm('¿Está seguro de eliminar el registro?', {
+          okTitle: 'Si',
+          okVariant: 'danger',
+          cancelTitle: 'No',
+          cancelVariant: 'primary',
+        })
+
+        if (modal) {
+          const response = await servicioCategoria.eliminarCategoria(id)
+          
+          if (response.status === 200) {
+            this.showToast('Success', 'CheckCircleIcon', 'Registro eliminado correctamente', 'success')
+            this.obtenerCategorias()
+          }          
+        }
+
+      } catch (error) {
+        this.showToast('Warning', 'AlertCircleIcon', 'La categoría no se pudo eliminar', 'warning')
+      }
     },
 
     showToast(title, icon, text, variant) {
