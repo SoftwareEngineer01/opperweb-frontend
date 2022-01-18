@@ -148,6 +148,7 @@
     <!-- Modal para agregar categoría -->
     <CategoriaAdd
       ref="refCategoriaAdd"
+      @reload="obtenerCategorias"
     />
 
 
