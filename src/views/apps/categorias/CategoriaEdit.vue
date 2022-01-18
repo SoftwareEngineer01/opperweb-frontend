@@ -6,15 +6,15 @@
       #default="{invalid}">
       <!-- Modal para Agregar Categorías -->
       <b-modal
-        id="modal-1"
-        ref="refCategoriaAdd"
+        id="editCategoryModal"
+        ref="refCategoriaEdit"
         hide-footer
-        title="Agregar Categoría"
+        title="Editar Categoría"
         scrollable
         @hidden="hideCategoryModal"
       >
         <div class="d-block">
-          <form @submit.prevent="addCategoria">
+          <form @submit.prevent="updateCategoria">
             <div class="form-row">
 
               <!-- Nombre -->
@@ -27,10 +27,9 @@
                   >
                   <b-form-input
                     id="nombre"
-                    v-model="categoria.nombre"
+                    v-model="categoriaEdit.nombre"
                     type="text"
                     class="form-control"
-                    placeholder="Nombre de la categoría"
                     :state="errors.length > 0 ? false:null"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -54,7 +53,7 @@
                 class="btn btn-primary btn-sm"
                 :disabled="invalid"
               >
-                <span class="fa fa-check" /> Guardar
+                <span class="fa fa-check" /> Actualizar
               </button>
             </div>
           </form>
@@ -77,42 +76,40 @@ export default {
 
   name: 'AddCategory',
 
+  props: {
+    categoriaEdit: {
+      type: Object,
+      default: () => {},
+    },
+  },
+
   components: {
     ToastificationContent,
   },
 
   data() {
-    return {
-      categoria : { nombre: '' },
-    }
+    return {}
   },
 
   methods: {
 
-    async addCategoria() {
+    async updateCategoria() {
       try {
-        const response = await categoriaServicio.agregarCategoria(this.categoria)
+        const response = await categoriaServicio.actualizarCategoria(this.categoriaEdit)
 
         if (response.status === 200) {
           this.$emit('reload')
           this.hideCategoryModal()
-          this.showToast('Agregado', 'CheckIcon', 'Categoría Agregada', 'success')
+          this.showToast('Actualizada', 'CheckIcon', 'Categoría Actualizada', 'success')
         }
       } catch (error) {         
-        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al agregar la categoría', 'warning')         
+        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al actualizar la categoría', 'warning')         
       }
     },
 
     hideCategoryModal() {
       this.$refs.categorias.reset()
-      this.$refs.refCategoriaAdd.hide()
-      this.cleanForm()
-    },
-
-    cleanForm() {
-      this.categoria = {
-        nombre: '',
-      }
+      this.$refs.refCategoriaEdit.hide()
     },
 
     showToast(title, icon, text, variant) {

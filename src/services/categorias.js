@@ -7,3 +7,7 @@ export function obtenerCategorias() {
 export function agregarCategoria(categoria) {
   return http().post('/categoria', categoria)
 }
+
+export function actualizarCategoria(categoria) {
+  return http().put(`/categoria/${categoria.id}`, categoria)
+}

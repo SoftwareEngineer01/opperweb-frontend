@@ -151,6 +151,13 @@
       @reload="obtenerCategorias"
     />
 
+    <!-- Modal para editar categoría -->
+    <CategoriaEdit
+      ref="refCategoriaEdit"      
+      :categoriaEdit="this.categoria"
+       @reload="obtenerCategorias"
+    />
+
 
   </div>
 </template>
@@ -180,6 +187,7 @@ import * as servicioCategoria from '@/services/categorias'
 
 // Componentes
 import CategoriaAdd from '@/views/apps/categorias/CategoriaAdd.vue'
+import CategoriaEdit from '@/views/apps/categorias/CategoriaEdit.vue'
 
 export default {
   components: {
@@ -199,6 +207,7 @@ export default {
     BPagination,
     vSelect,
     CategoriaAdd,
+    CategoriaEdit,
     BButton,
     BModal,
     BAlert,
@@ -262,8 +271,7 @@ export default {
     },
 
     editCategory(item) {
-      // this.$refs.refCategoriaAdd.editCategory(item)
-      console.log(item);
+      this.categoria = item
     },
 
     showToast(title, icon, text, variant) {
