@@ -97,8 +97,8 @@
 
             <!-- Editar Post -->
             <b-dropdown-item 
-              v-b-modal.editCategoryModal
-              @click="editCategory(data.item)"
+              v-b-modal.editPostModal
+              @click="editPost(data.item)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Editar</span>
@@ -106,7 +106,7 @@
 
             <!-- Eliminar Post -->
             <b-dropdown-item               
-              @click="eliminarCategoria(data.item.id)"
+              @click="eliminarPost(data.item.id)"
             >
               <feather-icon icon="Trash2Icon" />
               <span class="align-middle ml-50">Eliminar</span>
@@ -171,11 +171,11 @@
     />
 
     <!-- Modal para editar categoría -->
-    <!-- <CategoriaEdit
-      ref="refCategoriaEdit"      
-      :categoriaEdit="this.categoria"
-       @reload="obtenerCategorias"
-    /> -->
+    <PostEdit
+      ref="refPostEdit"      
+      :postEdit="this.post"
+       @reload="obtenerPosts"
+    />
 
 
   </div>
@@ -206,7 +206,7 @@ import * as servicioPost from '@/services/post'
 
 // Componentes
 import PostAdd from '@/views/apps/posts/PostAdd.vue'
-// import CategoriaEdit from '@/views/apps/categorias/CategoriaEdit.vue'
+import PostEdit from '@/views/apps/posts/PostEdit.vue'
 
 export default {
   components: {
@@ -226,7 +226,7 @@ export default {
     BPagination,
     vSelect,
     PostAdd,
-    // CategoriaEdit,
+    PostEdit,
     BButton,
     BModal,
     BAlert,
@@ -237,7 +237,7 @@ export default {
   data() {
     return {
       items: [],
-      categoria: {},
+      post: {},
       empty: 'No hay datos para mostrar',
       columns: [
         { key: 'id', label: 'Código', sortable: true },
@@ -292,11 +292,12 @@ export default {
       }
     },
 
-    editCategory(item) {
-      this.categoria = item
+    editPost(item) {
+      console.log(item);
+      this.post = item
     },
 
-    async eliminarCategoria(id) {
+    async eliminarPost(id) {
       try {
 
         const modal = await this.$bvModal.msgBoxConfirm('¿Está seguro de eliminar el registro?', {
@@ -307,16 +308,16 @@ export default {
         })
 
         if (modal) {
-          const response = await servicioCategoria.eliminarCategoria(id)
+          const response = await servicioPost.eliminarPost(id)
           
           if (response.status === 200) {
             this.showToast('Success', 'CheckCircleIcon', 'Registro eliminado correctamente', 'success')
-            this.obtenerCategorias()
+            this.obtenerPosts()
           }          
         }
 
       } catch (error) {
-        this.showToast('Warning', 'AlertCircleIcon', 'La categoría no se pudo eliminar', 'warning')
+        this.showToast('Warning', 'AlertCircleIcon', 'El post no se pudo eliminar', 'warning')
       }
     },
 

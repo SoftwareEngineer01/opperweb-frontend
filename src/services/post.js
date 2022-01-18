@@ -7,3 +7,11 @@ export function obtenerPosts() {
 export function agregarPosts(data) {
   return http().post('/post', data)
 }
+
+export function actualizarPosts(data) {
+    return http().put(`/post/${data.id}`, data)
+}
+
+export function eliminarPost(id) {
+    return http().delete(`/post/${id}`)
+}

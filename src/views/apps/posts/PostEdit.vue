@@ -2,32 +2,33 @@
   <!--  eslint-disable -->
   <div>
     <validation-observer 
-      ref="categorias"
+      ref="post"
       #default="{invalid}">
-      <!-- Modal para Agregar Categorías -->
+
+      <!-- Modal para Editar Post -->
       <b-modal
-        id="editCategoryModal"
-        ref="refCategoriaEdit"
+        id="editPostModal"
+        ref="refPostEdit"
         hide-footer
-        title="Editar Categoría"
+        title="Editar Post"
         scrollable
-        @hidden="hideCategoryModal"
+        @hidden="hidePostModal"
       >
         <div class="d-block">
           <form @submit.prevent="updateCategoria">
             <div class="form-row">
 
-              <!-- Nombre -->
+              <!-- Título -->
               <div class="form-group col-md-12">
-                <label for="nombre">Nombre</label>
+                <label for="titulo">Título</label>
                 <validation-provider
                     #default="{ errors }"
-                    name="nombre"
+                    name="titulo"
                     rules="required"
                   >
                   <b-form-input
-                    id="nombre"
-                    v-model="categoriaEdit.nombre"
+                    id="titulo"
+                    v-model="postEdit.titulo"
                     type="text"
                     class="form-control"
                     :state="errors.length > 0 ? false:null"
@@ -44,7 +45,7 @@
               <button
                 type="button"
                 class="btn btn-danger btn-sm mx-1"
-                @click="hideCategoryModal"
+                @click="hidePostModal"
               >
                 Cancelar
               </button>
@@ -77,7 +78,7 @@ export default {
   name: 'AddCategory',
 
   props: {
-    categoriaEdit: {
+    postEdit: {
       type: Object,
       default: () => {},
     },
@@ -95,11 +96,11 @@ export default {
 
     async updateCategoria() {
       try {
-        const response = await categoriaServicio.actualizarCategoria(this.categoriaEdit)
+        const response = await categoriaServicio.actualizarCategoria(this.postEdit)
 
         if (response.status === 200) {
           this.$emit('reload')
-          this.hideCategoryModal()
+          this.hidePostModal()
           this.showToast('Actualizada', 'CheckIcon', 'Categoría Actualizada', 'success')
         }
       } catch (error) {         
@@ -107,9 +108,9 @@ export default {
       }
     },
 
-    hideCategoryModal() {
-      this.$refs.categorias.reset()
-      this.$refs.refCategoriaEdit.hide()
+    hidePostModal() {
+      this.$refs.post.reset()
+      this.$refs.refPostEdit.hide()
     },
 
     showToast(title, icon, text, variant) {
