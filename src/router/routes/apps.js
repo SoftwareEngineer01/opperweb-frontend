@@ -19,6 +19,11 @@ export default [
     name: 'apps-posts',
     component: () => import('@/views/apps/posts/PostList.vue'),
   },
+  {
+    path: '/apps/posts',
+    name: 'posts-add',
+    component: () => import('@/views/apps/posts/PostsAdd.vue'),
+  },
 
 
   // *===============================================---*

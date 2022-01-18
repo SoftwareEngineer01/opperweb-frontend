@@ -42,8 +42,8 @@
                 placeholder="Buscar..."
               />
               <b-button
-                v-b-modal.modal-1
-                variant="primary"             
+                variant="primary"
+                @click="addPost"            
               >
                 <span class="text-nowrap">Agregar</span>
               </b-button>
@@ -54,7 +54,7 @@
       </div>
 
       <b-table
-        ref="refCategoriasListTable"
+        ref="refPostListTable"
         class="position-relative animated fadeIn"
         :items="items"
         :fields="columns"
@@ -164,11 +164,11 @@
 
     </b-card>
 
-    <!-- Modal para agregar categoría -->
-    <!-- <CategoriaAdd
-      ref="refCategoriaAdd"
-      @reload="obtenerCategorias"
-    /> -->
+    <!-- Modal para agregar post -->
+    <PostAdd
+      ref="refPostAdd"
+      @reload="obtenerPosts"
+    />
 
     <!-- Modal para editar categoría -->
     <!-- <CategoriaEdit
@@ -205,8 +205,8 @@ import 'moment/locale/es'
 import * as servicioPost from '@/services/post'
 
 // Componentes
-import CategoriaAdd from '@/views/apps/categorias/CategoriaAdd.vue'
-import CategoriaEdit from '@/views/apps/categorias/CategoriaEdit.vue'
+import PostAdd from '@/views/apps/posts/PostAdd.vue'
+// import CategoriaEdit from '@/views/apps/categorias/CategoriaEdit.vue'
 
 export default {
   components: {
@@ -225,8 +225,8 @@ export default {
     BDropdownItem,
     BPagination,
     vSelect,
-    CategoriaAdd,
-    CategoriaEdit,
+    PostAdd,
+    // CategoriaEdit,
     BButton,
     BModal,
     BAlert,
@@ -290,6 +290,10 @@ export default {
       } catch (error) {
         this.showToast('Warning', 'AlertCircleIcon', 'No se pudieron obtener los datos', 'warning')
       }
+    },
+
+    addPost() {
+      this.$router.push({ name: 'posts-add' })
     },
 
     editCategory(item) {
