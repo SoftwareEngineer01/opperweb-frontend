@@ -13,6 +13,13 @@ export default [
     component: () => import('@/views/apps/categorias/CategoriasList.vue'),
   },
 
+  // POSTS
+  {
+    path: '/apps/posts',
+    name: 'apps-posts',
+    component: () => import('@/views/apps/posts/PostList.vue'),
+  },
+
 
   // *===============================================---*
   // *--------- EMAIL & IT'S FILTERS N LABELS -------------------------------*

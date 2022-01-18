@@ -7,4 +7,9 @@ export default [
     route: 'apps-categorias',
     icon: 'FileIcon',
   },
+  {
+    title: 'Posts',
+    route: 'apps-posts',
+    icon: 'FileIcon',
+  },
 ]
