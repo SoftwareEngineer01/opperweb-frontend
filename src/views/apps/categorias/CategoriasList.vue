@@ -42,8 +42,8 @@
                 placeholder="Buscar..."
               />
               <b-button
-                variant="primary"
-                @click="addInventory"
+                v-b-modal.modal-1
+                variant="primary"             
               >
                 <span class="text-nowrap">Agregar</span>
               </b-button>
@@ -87,8 +87,8 @@
             </template>
             <!-- eslint-disable-next-line -->
             <b-dropdown-item 
-              v-b-modal.editInventory
-              @click="editInventory(data.item)"
+              v-b-modal.editCategoryModal
+              @click="editCategory(data.item)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Editar</span>
@@ -145,12 +145,11 @@
 
     </b-card>
 
-    <!-- Modal Para Editar Inventario -->
-    <!-- <InventoryEdit
-      ref="editModal"
-      :inventory="this.dataInventory"
-      @reload="getInventories"
-    /> -->
+    <!-- Modal para agregar categoría -->
+    <CategoriaAdd
+      ref="refCategoriaAdd"
+    />
+
 
   </div>
 </template>
@@ -162,7 +161,7 @@
 // Bootstrap
 import {
   BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination,
+  BBadge, BDropdown, BDropdownItem, BPagination, BModal, VBModal, BAlert,
 } from 'bootstrap-vue'
 
 // vSelect
@@ -179,7 +178,7 @@ import 'moment/locale/es'
 import * as servicioCategoria from '@/services/categorias'
 
 // Componentes
-// import InventoryEdit from '../inventory-edit/InventoryEdit.vue'
+import CategoriaAdd from '@/views/apps/categorias/CategoriaAdd.vue'
 
 export default {
   components: {
@@ -198,12 +197,18 @@ export default {
     BDropdownItem,
     BPagination,
     vSelect,
-    // InventoryEdit,
+    CategoriaAdd,
+    BButton,
+    BModal,
+    BAlert,
+  },
+  directives: {
+    'b-modal': VBModal,
   },
   data() {
     return {
       items: [],
-      dataInventory: {},
+      categoria: {},
       empty: 'No hay datos para mostrar',
       columns: [
         { key: 'id', label: 'Código', sortable: true },
@@ -244,10 +249,6 @@ export default {
 
   methods: {
 
-    moment(date) {
-      return moment(date).format('LLLL');
-    },
-
     async obtenerCategorias() {
       try {
         const response = await servicioCategoria.obtenerCategorias()
@@ -259,24 +260,9 @@ export default {
       }
     },
 
-    async changeStatus(id) {
-      try {
-        const response = await storeService.activateDesactivate(id)
-        if (response.status === 200) {
-          this.getInventories()
-          this.showToast('Actualizado', 'CheckIcon', 'Estado actualizado correctamente', 'success')
-        }
-      } catch (error) {
-        this.showToast('Warning', 'AlertCircleIcon', 'El estado no fue actualizado correctamente', 'warning')
-      }
-    },
-
-    addInventory() {
-      this.$router.push({ name: 'inventory-add' })
-    },
-
-    editInventory(data) {
-      this.dataInventory = data
+    editCategory(item) {
+      // this.$refs.refCategoriaAdd.editCategory(item)
+      console.log(item);
     },
 
     showToast(title, icon, text, variant) {
