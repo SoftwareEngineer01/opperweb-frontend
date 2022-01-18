@@ -2,60 +2,40 @@
   <!--  eslint-disable -->
   <div>
     <validation-observer 
-      ref="post"
+      ref="comentario"
       #default="{invalid}">
 
       <!-- Modal para Editar Post -->
       <b-modal
-        id="editPostModal"
-        ref="refPostEdit"
+        id="editComentarioModal"
+        ref="refComentarioEdit"
         hide-footer
-        title="Editar Post"
+        title="Editar Comentario"
         scrollable
-        @hidden="hidePostModal"
+        @hidden="hideComentarioModal"
       >
         <div class="d-block">
-          <form @submit.prevent="actualizarPost">
+          <form @submit.prevent="actualizarComentario">
             <div class="form-row">
 
-              <!-- Categorías -->
+              <!-- Post -->
               <b-col 
                cols="12" 
                md="12">
                 <b-form-group 
-                  label="Categoría" 
-                  label-for="categoria">
+                  label="Post" 
+                  label-for="post">
                   <v-select 
-                    v-model="postEdit.categoria_id" 
-                    label="nombre"
+                    v-model="comentarioEdit.post_id" 
+                    label="titulo"
                     :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" 
-                    :options="categorias"
-                    :reduce="categorias => categorias.id" 
+                    :options="posts"
+                    :reduce="posts => posts.id" 
                     :clearable="false" 
-                    input-id="categoria" 
+                    input-id="post" 
                   />
                 </b-form-group>
               </b-col>
-
-
-              <!-- Título -->
-              <div class="form-group col-md-12">
-                <label for="titulo">Título</label>
-                <validation-provider
-                    #default="{ errors }"
-                    name="titulo"
-                    rules="required"
-                  >
-                  <b-form-input
-                    id="titulo"
-                    v-model="postEdit.titulo"
-                    type="text"
-                    class="form-control"
-                    :state="errors.length > 0 ? false:null"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </div>
 
               <!-- Contenido -->
               <div class="form-group col-md-12">
@@ -67,7 +47,7 @@
                   >
                   <b-form-textarea
                     id="contenido"
-                    v-model="postEdit.contenido"
+                    v-model="comentarioEdit.contenido"
                     type="text"
                     class="form-control"
                     :state="errors.length > 0 ? false:null"
@@ -84,7 +64,7 @@
               <button
                 type="button"
                 class="btn btn-danger btn-sm mx-1"
-                @click="hidePostModal"
+                @click="hideComentarioModal"
               >
                 Cancelar
               </button>
@@ -112,15 +92,15 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 import vSelect from 'vue-select'
 
 // Servicios
-import * as categoriaServicio from '@/services/categorias'
 import * as postServicio from '@/services/post'
+import * as comentarioServicio from '@/services/comentarios'
 
 export default {
 
-  name: 'AddCategory',
+  name: 'EditComentario',
 
   props: {
-    postEdit: {
+    comentarioEdit: {
       type: Object,
       default: () => {},
     },
@@ -133,43 +113,43 @@ export default {
 
   data() {
     return {
-      categorias : [],
+      posts : [],
     }
   },
 
   created()
   {
-    this.obtenerCategorias();
+    this.obtenerPosts();
   },
 
   methods: {
 
-    async obtenerCategorias() {
+    async obtenerPosts() {
       try {
-        const response = await categoriaServicio.obtenerCategorias()
-        this.categorias = response.data.data
+        const response = await postServicio.obtenerPosts()
+        this.posts = response.data.data
       } catch (error) {
-        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al obtener las categorías', 'warning')   
+        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al obtener los posts', 'warning')   
       }
     },
 
-    async actualizarPost() {
+    async actualizarComentario() {
       try {
-        const response = await postServicio.actualizarPost(this.postEdit)
+        const response = await comentarioServicio.actualizarComentario(this.comentarioEdit)
 
         if (response.status === 200) {
           this.$emit('reload')
-          this.hidePostModal()
-          this.showToast('Actualizada', 'CheckIcon', 'Post Actualizado', 'success')
+          this.hideComentarioModal()
+          this.showToast('Actualizada', 'CheckIcon', 'Comentario Actualizado', 'success')
         }
       } catch (error) {         
-        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al actualizar el post', 'warning')         
+        this.showToast('Advertencia!', 'AlertCircleIcon', 'Ocurrió un error al actualizar el comentario', 'warning')         
       }
     },
 
-    hidePostModal() {
-      this.$refs.post.reset()
-      this.$refs.refPostEdit.hide()
+    hideComentarioModal() {
+      this.$refs.comentario.reset()
+      this.$refs.refComentarioEdit.hide()
     },
 
     showToast(title, icon, text, variant) {

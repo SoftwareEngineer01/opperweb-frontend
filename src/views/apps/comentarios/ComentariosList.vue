@@ -89,8 +89,8 @@
 
             <!-- Editar Comentario -->
             <b-dropdown-item 
-              v-b-modal.editPostModal
-              @click="editPost(data.item)"
+              v-b-modal.editComentarioModal
+              @click="editComentario(data.item)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Editar</span>
@@ -156,18 +156,12 @@
 
     </b-card>
 
-    <!-- Modal para agregar post -->
-    <!-- <PostAdd
-      ref="refPostAdd"
-      @reload="obtenerPosts"
-    /> -->
-
-    <!-- Modal para editar categoría -->
-    <!-- <PostEdit
-      ref="refPostEdit"      
-      :postEdit="this.post"
-       @reload="obtenerPosts"
-    /> -->
+    <!-- Modal para editar comentario -->
+    <ComentarioEdit
+      ref="refComentarioEdit"      
+      :comentarioEdit="this.comentario"
+       @reload="obtenerComentarios"
+    />
 
 
   </div>
@@ -197,8 +191,7 @@ import 'moment/locale/es'
 import * as comentarioServicio from '@/services/comentarios'
 
 // Componentes
-import PostAdd from '@/views/apps/posts/PostAdd.vue'
-import PostEdit from '@/views/apps/posts/PostEdit.vue'
+import ComentarioEdit from '@/views/apps/comentarios/ComentarioEdit.vue'
 
 export default {
   components: {
@@ -217,8 +210,7 @@ export default {
     BDropdownItem,
     BPagination,
     vSelect,
-    PostAdd,
-    PostEdit,
+    ComentarioEdit,
     BButton,
     BModal,
     BAlert,
@@ -229,7 +221,7 @@ export default {
   data() {
     return {
       items: [],
-      post: {},
+      comentario: {},
       empty: 'No hay datos para mostrar',
       columns: [
         { key: 'id', label: 'Código', sortable: true },
@@ -286,8 +278,8 @@ export default {
       }
     },
 
-    editPost(item) {
-      this.post = item
+    editComentario(item) {
+      this.comentario = item
     },
 
     async eliminarComentario(id) {

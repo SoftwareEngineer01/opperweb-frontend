@@ -8,9 +8,9 @@ export function agregarComentario(comentario) {
   return http().post('/comentario', comentario)
 }
 
-// export function actualizarCategoria(categoria) {
-//   return http().put(`/categoria/${categoria.id}`, categoria)
-// }
+export function actualizarComentario(comentario) {
+  return http().put(`/comentario/${comentario.id}`, comentario)
+}
 
 export function eliminarComentario(id) {
   return http().delete(`/comentario/${id}`)
