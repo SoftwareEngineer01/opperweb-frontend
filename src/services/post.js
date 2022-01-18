@@ -8,7 +8,7 @@ export function agregarPosts(data) {
   return http().post('/post', data)
 }
 
-export function actualizarPosts(data) {
+export function actualizarPost(data) {
     return http().put(`/post/${data.id}`, data)
 }
 
