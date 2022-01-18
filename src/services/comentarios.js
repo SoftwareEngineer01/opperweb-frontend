@@ -12,6 +12,6 @@ export function agregarComentario(comentario) {
 //   return http().put(`/categoria/${categoria.id}`, categoria)
 // }
 
-// export function eliminarCategoria(id) {
-//   return http().delete(`/categoria/${id}`)
-// }
+export function eliminarComentario(id) {
+  return http().delete(`/comentario/${id}`)
+}

@@ -87,7 +87,7 @@
             </template>
             <!-- eslint-disable-next-line -->
 
-            <!-- Editar Post -->
+            <!-- Editar Comentario -->
             <b-dropdown-item 
               v-b-modal.editPostModal
               @click="editPost(data.item)"
@@ -96,9 +96,9 @@
               <span class="align-middle ml-50">Editar</span>
             </b-dropdown-item>
 
-            <!-- Eliminar Post -->
+            <!-- Eliminar Comentario -->
             <b-dropdown-item               
-              @click="eliminarPost(data.item.id)"
+              @click="eliminarComentario(data.item.id)"
             >
               <feather-icon icon="Trash2Icon" />
               <span class="align-middle ml-50">Eliminar</span>
@@ -290,7 +290,7 @@ export default {
       this.post = item
     },
 
-    async eliminarPost(id) {
+    async eliminarComentario(id) {
       try {
 
         const modal = await this.$bvModal.msgBoxConfirm('¿Está seguro de eliminar el registro?', {
@@ -301,7 +301,7 @@ export default {
         })
 
         if (modal) {
-          const response = await servicioPost.eliminarPost(id)
+          const response = await comentarioServicio.eliminarComentario(id)
           
           if (response.status === 200) {
             this.showToast('Success', 'CheckCircleIcon', 'Registro eliminado correctamente', 'success')
@@ -310,7 +310,7 @@ export default {
         }
 
       } catch (error) {
-        this.showToast('Warning', 'AlertCircleIcon', 'El post no se pudo eliminar', 'warning')
+        this.showToast('Warning', 'AlertCircleIcon', 'El comentario no se pudo eliminar', 'warning')
       }
     },
 
