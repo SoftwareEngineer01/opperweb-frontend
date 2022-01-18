@@ -12,4 +12,9 @@ export default [
     route: 'apps-posts',
     icon: 'FileIcon',
   },
+  {
+    title: 'Comentarios',
+    route: 'apps-comentarios',
+    icon: 'FileIcon',
+  },
 ]

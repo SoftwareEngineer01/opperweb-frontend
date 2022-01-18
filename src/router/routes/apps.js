@@ -19,10 +19,17 @@ export default [
     name: 'apps-posts',
     component: () => import('@/views/apps/posts/PostList.vue'),
   },
+  // {
+  //   path: '/apps/posts',
+  //   name: 'posts-add',
+  //   component: () => import('@/views/apps/posts/PostsAdd.vue'),
+  // },
+
+  // COMENTARIOS
   {
-    path: '/apps/posts',
-    name: 'posts-add',
-    component: () => import('@/views/apps/posts/PostsAdd.vue'),
+    path: '/apps/comentarios',
+    name: 'apps-comentarios',
+    component: () => import('@/views/apps/comentarios/ComentariosList.vue'),
   },
 
 
