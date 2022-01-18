@@ -4,9 +4,9 @@ export function obtenerComentarios() {
   return http().get('/comentario')
 }
 
-// export function agregarCategoria(categoria) {
-//   return http().post('/categoria', categoria)
-// }
+export function agregarComentario(comentario) {
+  return http().post('/comentario', comentario)
+}
 
 // export function actualizarCategoria(categoria) {
 //   return http().put(`/categoria/${categoria.id}`, categoria)

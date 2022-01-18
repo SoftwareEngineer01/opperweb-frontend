@@ -42,8 +42,8 @@
                 placeholder="Buscar..."
               />
               <b-button
-                v-b-modal.modal-post
-                variant="primary"             
+                variant="primary"
+                @click="addComentario"             
               >
                 <span class="text-nowrap">Agregar</span>
               </b-button>
@@ -270,6 +270,10 @@ export default {
   },
 
   methods: {
+
+    addComentario() {
+      this.$router.push({ name: 'comentarios-add' })
+    },
 
     async obtenerComentarios() {
       try {
